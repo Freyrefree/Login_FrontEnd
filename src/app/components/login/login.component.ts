@@ -81,7 +81,9 @@ export class LoginComponent implements OnInit {
           if (this.authService.isAuthenticated()) {
             console.log('Login exitoso y token almacenado en localStorage.');
             // Redirigir al usuario a otra página o realizar otra acción
-            this.router.navigate(['/main']); // Redirigir a la vista 'main'
+            // this.router.navigate(['/main']); // Redirigir a la vista 'main'
+            this.router.navigateByUrl('/main'); // Redirigir a la vista 'main'
+
           }
         },
         (error) => {
