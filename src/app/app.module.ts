@@ -10,7 +10,7 @@ import { APP_ROUTING } from './app.routes';
 //Componenetes
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { LoginComponent } from './components/home/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 

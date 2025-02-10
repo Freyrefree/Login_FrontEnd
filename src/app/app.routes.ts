@@ -1,5 +1,5 @@
 import { RouterModule,Routes } from '@angular/router';
-import { LoginComponent } from './components/home/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main/main.component';
 
 // Importar el Auth Guard
