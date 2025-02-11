@@ -7,4 +7,18 @@ export interface Empleado {
     rfc: string;
     nss: string;
 }
+
+
+// *************************** Sistemas Asignados ********************************
+export interface Sistema {
+    id: number;
+    nombre: string;
+  }
+  
+  export interface EmpleadoSistemas {
+    idusuario: number;
+    claveEmpledado: string;
+    sistemas: Sistema[];
+  }
+  
   

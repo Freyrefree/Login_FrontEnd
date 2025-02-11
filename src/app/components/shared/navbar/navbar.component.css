@@ -1,0 +1,31 @@
+/* navbar.component.css */
+
+/* Eliminar el padding superior del navbar */
+.navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  /* Asegurar que el navbar ocupe el 100% del ancho */
+  .navbar {
+    width: 100%;
+  }
+  
+  /* Eliminar el margen superior del navbar */
+  .navbar {
+    margin-top: 0;
+  }
+  
+  /* Asegurar que el navbar esté pegado hasta arriba */
+  .navbar {
+    position: fixed; /* Fija el navbar en la parte superior */
+    top: 0; /* Lo coloca en la parte superior */
+    left: 0; /* Lo coloca en la parte izquierda */
+    right: 0; /* Lo coloca en la parte derecha */
+    z-index: 1000; /* Asegura que el navbar esté por encima de otros elementos */
+  }
+  
+  /* Ajustar el contenido principal para que no se solape con el navbar */
+  .main-container {
+    padding-top: 56px; /* Ajusta este valor según la altura del navbar */
+  }

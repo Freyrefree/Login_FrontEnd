@@ -1,11 +1,17 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiAuthTokenUserService } from 'src/app/servicios/api-auth-token-user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { jwtDecode } from 'jwt-decode';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+// Servicios 
+import { ApiAuthTokenUserService } from 'src/app/servicios/api-auth-token-user.service';
+import { ApiGetSistemasPorEmpleadoService } from 'src/app/servicios/api-get-sistemas-por-empleado.service';
+import { UserService } from 'src/app/servicios/user.service';
+
+//*** Interfaces */
+import { EmpleadoSistemas } from 'src/app/interfaces/empleado.model';
 
 
 @Component({
@@ -22,6 +28,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: ApiAuthTokenUserService,
+    private apiService: ApiGetSistemasPorEmpleadoService, // Inyecta el servicio API
+    private userService: UserService,
     private snackBar: MatSnackBar,
     private router: Router
   ) {
@@ -80,10 +88,24 @@ export class LoginComponent implements OnInit {
           this.hideLoading(); // Ocultar indicador de carga
           if (this.authService.isAuthenticated()) {
             console.log('Login exitoso y token almacenado en localStorage.');
-            // Redirigir al usuario a otra página o realizar otra acción
-            // this.router.navigate(['/main']); // Redirigir a la vista 'main'
-            this.router.navigateByUrl('/main'); // Redirigir a la vista 'main'
-
+  
+            // Después de login exitoso, consumimos la API para obtener los sistemas del empleado
+            this.apiService.getSistemasPorEmpleado(usuario).subscribe(
+              (empleadoSistemas: EmpleadoSistemas) => {
+                console.log('Sistemas del empleado:', empleadoSistemas);
+  
+                // Almacenar la claveEmpledado en el UserService
+                this.userService.setClaveEmpledado(empleadoSistemas.claveEmpledado);
+  
+                this.router.navigateByUrl('/main');
+              },
+              (error) => {
+                console.error('Error al obtener los sistemas del empleado:', error);
+                this.snackBar.open('Error al obtener los sistemas del empleado. Intenta nuevamente.', 'Cerrar', {
+                  duration: 3000,
+                });
+              }
+            );
           }
         },
         (error) => {
@@ -100,6 +122,9 @@ export class LoginComponent implements OnInit {
       });
     }
   }
+  
+  
+  
   
 
   private showLoading() {
