@@ -24,6 +24,8 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
   password: string = ''; // Variable para almacenar la contraseña
+  showPassword: boolean = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -133,5 +135,9 @@ export class LoginComponent implements OnInit {
 
   private hideLoading() {
     this.isLoading = false;
+  }
+
+  toggleShowPassword(): void {
+    this.showPassword = !this.showPassword;
   }
 }
