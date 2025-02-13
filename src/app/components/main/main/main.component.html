@@ -9,7 +9,9 @@
             {{ sistema.nombre }} <!-- Nombre del sistema -->
           </div>
           <div class="card-body">
-            <button class="btn btn-primary" (click)="redirectToSystem()">Aceptar</button>
+            <button *ngIf="sistema.url" class="btn btn-primary" (click)="redirectToSystem(sistema.url)">
+              Aceptar
+            </button>
           </div>
         </div>
       </div>
@@ -21,5 +23,3 @@
 
   </div>
 </div>
-  
-  

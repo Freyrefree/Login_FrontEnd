@@ -76,15 +76,17 @@ export class MainComponent implements OnInit {
   }
   
 
-  redirectToSystem() {
+  redirectToSystem(sistema: string) {
     const token = localStorage.getItem('token');
     if (token) {
-      const redirectUrl = `http://localhost:61399?token=${token}`; // URL del segundo frontend con el token como parámetro
-
-      // Redirigir al usuario al segundo frontend
-      window.location.href = redirectUrl;
+      const redirectUrl = `${sistema}?token=${token}`; // Usar la URL proporcionada
+      window.location.href = redirectUrl; // Redirigir al usuario
     } else {
       console.error('No se encontró el token en el localStorage.');
     }
   }
+  
+
+
+
 }

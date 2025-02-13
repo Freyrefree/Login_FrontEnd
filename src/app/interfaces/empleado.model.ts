@@ -13,6 +13,7 @@ export interface Empleado {
 export interface Sistema {
     id: number;
     nombre: string;
+    url:string;
   }
   
   export interface EmpleadoSistemas {
