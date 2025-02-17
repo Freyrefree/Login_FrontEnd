@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { EmpleadoSistemas } from '../interfaces/empleado.model';
-import { UserService } from './user.service'; // Importa el UserService
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,7 @@ import { UserService } from './user.service'; // Importa el UserService
 export class ApiGetSistemasPorEmpleadoService {
   private apiUrl = 'https://g-mc.mx:8105/api/SAITSistemasPorEmpleado';
 
-  constructor(private http: HttpClient, private userService: UserService) {}
+  constructor(private http: HttpClient) {}
 
   getSistemasPorEmpleado(claveEmpleado: string): Observable<EmpleadoSistemas> {
     const formData = new FormData();

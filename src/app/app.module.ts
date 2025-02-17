@@ -23,6 +23,9 @@ import { MainComponent } from './components/main/main/main.component';
 import { ApiAuthTokenUserService } from './servicios/api-auth-token-user.service';
 import { AuthGuard } from './guards/auth.guard';
 
+/// Interceptores
+import { AuthInterceptor } from './auth.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +46,9 @@ import { AuthGuard } from './guards/auth.guard';
   providers: [
 
     ApiAuthTokenUserService,
-    AuthGuard
+    AuthGuard,
+    AuthInterceptor
+
 
   ],
   bootstrap: [AppComponent]

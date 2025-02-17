@@ -5,8 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 //****************** Servicios ***********
-import { UserService } from 'src/app/servicios/user.service';
 import { ApiGetSistemasPorEmpleadoService } from 'src/app/servicios/api-get-sistemas-por-empleado.service';
+import { ApiAuthTokenUserService } from 'src/app/servicios/api-auth-token-user.service';
 
 // ******* Interfaces ***************
 import { Empleado, Sistema } from 'src/app/interfaces/empleado.model';
@@ -26,13 +26,10 @@ export class MainComponent implements OnInit {
 
 
   constructor(
-
     private http: HttpClient,
-    private userService: UserService,
+    private userService: ApiAuthTokenUserService,
     private apiService: ApiGetSistemasPorEmpleadoService, // Inyecta el servicio API
     private snackBar: MatSnackBar,
-
-
   ) {}
 
   ngOnInit(): void {
@@ -41,11 +38,13 @@ export class MainComponent implements OnInit {
       this.claveEmpledado = clave;
       console.log('Clave del empleado:', this.claveEmpledado);
     });
+
     // Suscribirse a los datos del empleado
     this.userService.datosEmpleado$.subscribe((data) => {
       this.datosEmpleado = data;
       console.log('Datos del empleado:', this.datosEmpleado);
     });
+
     // Obtener la claveEmpledado actual (opcional)
     this.claveEmpledado = this.userService.getClaveEmpledado();
     this.ObtenerSistemas(this.claveEmpledado);
@@ -63,8 +62,6 @@ export class MainComponent implements OnInit {
         // Almacenar los sistemas en la propiedad sistemasEmpleado
         this.sistemasEmpleado = empleadoSistemas.sistemas;
   
-        // Almacenar la claveEmpledado en el UserService (si es necesario)
-        // this.userService.setClaveEmpledado(empleadoSistemas.claveEmpledado);
       },
       (error) => {
         console.error('Error al obtener los sistemas del empleado:', error);
@@ -78,11 +75,17 @@ export class MainComponent implements OnInit {
 
   redirectToSystem(sistema: string) {
     const token = localStorage.getItem('token');
-    if (token) {
+  
+    // Verifica si el token existe y es válido
+    if (token && this.userService.isTokenValid(token)) {
       const redirectUrl = `${sistema}?token=${token}`; // Usar la URL proporcionada
       window.location.href = redirectUrl; // Redirigir al usuario
     } else {
-      console.error('No se encontró el token en el localStorage.');
+      console.error('Token no válido o no encontrado.');
+      this.userService.logout(); // Limpiar el token y redirigir al login
+      this.snackBar.open('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.', 'Cerrar', {
+        duration: 3000,
+      });
     }
   }
   

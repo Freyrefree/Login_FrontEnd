@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 //**** */ Servicios *****
-import { UserService } from 'src/app/servicios/user.service'; // Ajusta la ruta según tu estructura
 import { ApiAuthTokenUserService } from 'src/app/servicios/api-auth-token-user.service';
 
 
@@ -16,17 +15,16 @@ export class NavbarComponent implements OnInit {
   userImageSrc: string = ''; // Propiedad para la imagen aleatoria
 
   constructor(
-      private router: Router,
-     private userService: UserService,
-     private authService: ApiAuthTokenUserService
-    ) {}
+    private router: Router,
+    private authService: ApiAuthTokenUserService
+  ) {}
 
   ngOnInit(): void {
     // Generar la ruta de la imagen aleatoria
     this.userImageSrc = this.getRandomUserImage();
 
     // Suscribirse a los datos del empleado
-    this.userService.datosEmpleado$.subscribe((data) => {
+    this.authService.datosEmpleado$.subscribe((data) => {
       if (data) {
         this.nombreUsuario = data.nombreCompleto; // Actualizar el nombre del usuario
       } else {
